@@ -1,1 +1,1 @@
-start app: uvicorn main:app --reload
+Start `docker compose up`
