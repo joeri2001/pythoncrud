@@ -1,8 +1,8 @@
 import os
 from typing import Optional
 from fastapi import FastAPI
-from models import Story, Task
-from database import db
+from app.models import Story, Task
+from app.database import db
 from jose import jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer

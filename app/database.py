@@ -1,5 +1,5 @@
 import json
-from models import Story
+from app.models import Story
 
 with open('initial_data.json') as f:
   data = json.load(f)
