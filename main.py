@@ -24,33 +24,33 @@ def verify_token(token: str = Depends(oauth2_scheme)):
       detail="Invalid token"
     )
 
-app = FastAPI()
+app = FastAPI(dependencies=[Depends(verify_token)])
 
 @app.get("/stories/")
-async def read_stories(token: str = Depends(verify_token)) -> dict:
+async def read_stories() -> dict:
   return db
 
 @app.post("/stories/")
-async def create_story(story: Story,  token: str = Depends(verify_token)) -> Story:
+async def create_story(story: Story) -> Story:
   db[story.id] = story
   return story
 
 @app.put("/stories/{story_id}")
-async def update_story(story_id: int, story: Story,  token: str = Depends(verify_token)) -> Story:
+async def update_story(story_id: int, story: Story) -> Story:
   db[story_id] = story
   return story
 
 @app.delete("/stories/{story_id}")
-async def delete_story(story_id: int,  token: str = Depends(verify_token)) -> None:
+async def delete_story(story_id: int) -> None:
   return db.pop(story_id, None)
 
 @app.post("/stories/{story_id}/tasks/")
-async def create_task(story_id: int, task: Task,  token: str = Depends(verify_token)) -> Task:
+async def create_task(story_id: int, task: Task) -> Task:
   db[story_id].tasks.append(task)
   return task
 
 @app.put("/stories/{story_id}/tasks/{task_id}")
-async def update_task(story_id: int, task_id: int, task: Task,  token: str = Depends(verify_token)) -> Optional[Task]:
+async def update_task(story_id: int, task_id: int, task: Task) -> Optional[Task]:
   for i, existing_task in enumerate(db[story_id].tasks):
     if existing_task.id == task_id:
       db[story_id].tasks[i] = task
@@ -58,6 +58,6 @@ async def update_task(story_id: int, task_id: int, task: Task,  token: str = Dep
   return None
 
 @app.delete("/stories/{story_id}/tasks/{task_id}")
-async def delete_task(story_id: int, task_id: int,  token: str = Depends(verify_token)) -> None:
+async def delete_task(story_id: int, task_id: int) -> None:
   db[story_id].tasks = [task for task in db[story_id].tasks if task.id != task_id]
   return None
