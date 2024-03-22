@@ -1,0 +1,44 @@
+[
+  {
+      "id": 1,
+      "name": "First Story",
+      "tasks": [
+          {
+              "id": 1,
+              "name": "First Task",
+              "points": 5,
+              "tags": ["tag1", "tag2"]
+          },
+          {
+              "id": 2,
+              "name": "Second Task",
+              "points": 3,
+              "tags": ["tag2", "tag3"]
+          }
+      ],
+      "points": 8,
+      "tags": ["tag1", "tag2", "tag3"],
+      "epic": false
+  },
+  {
+      "id": 2,
+      "name": "Second Story",
+      "tasks": [
+        {
+            "id": 1,
+            "name": "First Task 2",
+            "points": 5,
+            "tags": ["tag1", "tag2"]
+        },
+        {
+            "id": 2,
+            "name": "Second Task 2",
+            "points": 3,
+            "tags": ["tag2", "tag3"]
+        }
+    ],
+      "points": 0,
+      "tags": ["tag4", "tag5"],
+      "epic": true
+  }
+]
