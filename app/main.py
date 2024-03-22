@@ -1,12 +1,13 @@
 import os
 from typing import Optional
-from fastapi import FastAPI
-from app.models import Story, Task
-from app.database import db
+
 from jose import jwt
-from fastapi import Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from dotenv import load_dotenv
+
+from app.models import Story, Task
+from app.database import db
 
 load_dotenv()
 
@@ -18,11 +19,11 @@ def verify_token(token: str = Depends(oauth2_scheme)):
   try:
     payload = jwt.decode(token, secret_key, algorithms=["HS256"])
     return payload
-  except jwt.JWTError:
+  except jwt.JWTError as exc:
     raise HTTPException(
       status_code=status.HTTP_403_FORBIDDEN,
       detail="Invalid token"
-    )
+    ) from exc
 
 app = FastAPI(dependencies=[Depends(verify_token)])
 
